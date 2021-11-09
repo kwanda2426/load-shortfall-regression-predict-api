@@ -80,9 +80,9 @@ def _preprocess_data(data):
 
     predict_vector['time'] = predict_vector['time'].cat.codes
     
-    X = predict_vector[predict_vector.columns]
+    x = predict_vector[predict_vector.columns]
     
-    return X
+    return x
 
 def load_model(path_to_model:str):
     """Adapter function to load our pretrained model into memory.
