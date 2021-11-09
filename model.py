@@ -58,9 +58,26 @@ def _preprocess_data(data):
     # ---------------------------------------------------------------
 
     # ----------- Replace this code with your own preprocessing steps --------
-    predict_vector = feature_vector_df[['Madrid_wind_speed','Bilbao_rain_1h','Valencia_wind_speed']]
-    # ------------------------------------------------------------------------
+    
+    predict_vector = feature_vector_df[['time', 'Madrid_wind_speed', 'Madrid_humidity',
+       'Madrid_temp']]
+    
+    df_1 = predict_vector.copy()
+    
+    predict_vector['time'] = pd.to_datetime(predict_vector['time']) # changing the date datatype
+    
+    
+    
+    predict_vector['month'] = predict_vector['time'].dt.month
+    
+    predict_vector['day'] = predict_vector['time'].dt.day
+    
+    predict_vector['time'] = predict_vector['time'].dt.time
+    
+    predict_vector['time'] = predict_vector['time'].astype('category')
 
+    predict_vector['time'] = predict_vector['time'].cat.codes
+    
     return predict_vector
 
 def load_model(path_to_model:str):
