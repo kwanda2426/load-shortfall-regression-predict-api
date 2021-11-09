@@ -56,27 +56,30 @@ def _preprocess_data(data):
     # The code below is for demonstration purposes only. You will not
     # receive marks for submitting this code in an unchanged state.
     # ---------------------------------------------------------------
-
-    # ----------- Replace this code with your own preprocessing steps --------
     
-    predict_vector = feature_vector_df[['time', 'Madrid_wind_speed', 'Madrid_humidity',
+    predict_vector = feature_vector_df[['time','Madrid_wind_speed', 'Valencia_wind_speed', 'Seville_humidity',
+       'Madrid_humidity', 'Bilbao_clouds_all', 'Bilbao_wind_speed',
+       'Seville_clouds_all', 'Barcelona_wind_speed', 'Madrid_clouds_all',
+       'Seville_wind_speed', 'Bilbao_snow_3h', 'Seville_rain_3h',
+       'Barcelona_rain_3h', 'Valencia_snow_3h', 'Valencia_temp',
+       'Seville_temp', 'Valencia_humidity', 'Barcelona_temp', 'Bilbao_temp',
        'Madrid_temp']]
     
-    df_1 = predict_vector.copy()
-    
-    predict_vector['time'] = pd.to_datetime(predict_vector['time']) # changing the date datatype
-    
-    
-    
+    predict_vector['time'] = pd.to_datetime(predict_vector['time'])
+
     predict_vector['month'] = predict_vector['time'].dt.month
-    
+
     predict_vector['day'] = predict_vector['time'].dt.day
-    
+
     predict_vector['time'] = predict_vector['time'].dt.time
-    
+
+
+
+
     predict_vector['time'] = predict_vector['time'].astype('category')
 
     predict_vector['time'] = predict_vector['time'].cat.codes
+
     
     return predict_vector
 
