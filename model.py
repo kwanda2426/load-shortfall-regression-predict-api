@@ -57,32 +57,27 @@ def _preprocess_data(data):
     # receive marks for submitting this code in an unchanged state.
     # ---------------------------------------------------------------
     
-    predict_vector = feature_vector_df[['time','Madrid_wind_speed', 'Valencia_wind_speed', 'Seville_humidity',
-       'Madrid_humidity', 'Bilbao_clouds_all', 'Bilbao_wind_speed',
-       'Seville_clouds_all', 'Barcelona_wind_speed', 'Madrid_clouds_all',
-       'Seville_wind_speed', 'Bilbao_snow_3h', 'Seville_rain_3h',
-       'Barcelona_rain_3h', 'Valencia_snow_3h', 'Valencia_temp',
+    predict_vector = feature_vector_df[['time', 'Madrid_wind_speed', 'Valencia_wind_deg', 'Valencia_wind_speed',
+       'Seville_humidity', 'Madrid_humidity', 'Bilbao_clouds_all',
+       'Bilbao_wind_speed', 'Seville_clouds_all', 'Barcelona_wind_speed',
+       'Madrid_clouds_all', 'Seville_wind_speed', 'Seville_pressure',
+       'Bilbao_snow_3h', 'Seville_rain_3h', 'Barcelona_rain_3h',
+       'Valencia_snow_3h', 'Madrid_weather_id', 'Barcelona_weather_id',
+       'Seville_weather_id', 'Valencia_temp', 'Bilbao_weather_id',
        'Seville_temp', 'Valencia_humidity', 'Barcelona_temp', 'Bilbao_temp',
-       'Madrid_temp']]
+       'Madrid_temp', 'load_shortfall_3h']]
     
-    predict_vector['time'] = pd.to_datetime(predict_vector['time'])
-
-    predict_vector['month'] = predict_vector['time'].dt.month
-
-    predict_vector['day'] = predict_vector['time'].dt.day
-
-    predict_vector['time'] = predict_vector['time'].dt.time
-
-
-
-
-    predict_vector['time'] = predict_vector['time'].astype('category')
-
-    predict_vector['time'] = predict_vector['time'].cat.codes
+    # take columns with Madrid
+    cols = [col for col in predict_vector.columns if 'Madrid' in col]
     
-    x = predict_vector[predict_vector.columns]
+    # take Madrid data 
     
-    return x
+    df_x = predict_vector[cols]
+
+    # ------------------------------------------------------------------------
+
+    return df_x
+    
 
 def load_model(path_to_model:str):
     """Adapter function to load our pretrained model into memory.
